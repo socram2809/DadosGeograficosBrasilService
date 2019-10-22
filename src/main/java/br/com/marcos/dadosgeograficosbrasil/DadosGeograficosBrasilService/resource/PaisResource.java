@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +47,12 @@ public class PaisResource {
 	}
 	
 	/**
-	 * Processa requisições na URI "/limitada" que utilizam o método GET do HTTP para retornar uma consulta paginada de países
+	 * Processa requisições, na URI "/list", que utilizam o método GET do HTTP para retornar uma consulta paginada de países
 	 * @param pagina
 	 * @param tamanho
 	 * @return
 	 */
-	@GetMapping("/limitada")
+	@GetMapping("/list")
 	public List<Pais> recuperarPaisesPaginado(@RequestParam(name="pagina") int pagina, @RequestParam int tamanho){
 		Page<Pais> paginaPais = paisRepository.findAll(PageRequest.of(pagina, tamanho));
 		return paginaPais.getContent();
@@ -67,14 +69,35 @@ public class PaisResource {
 	}
 	
 	/**
-	 * Processa requisições que utilizam o método POST do HTTP para salvar um país
+	 * Processa requisições que utilizam o método POST do HTTP para inserir um país
 	 * @param pais
 	 * @return
 	 */
-	@PostMapping
+	@PostMapping(consumes = "application/json", produces = "application/json")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Pais inserirPais(@Valid @RequestBody Pais pais) {
 		return paisRepository.save(pais);
 	}
+	
+	/**
+	 * Processa requisições que utilizam o método PUT do HTTP para atualizar um país
+	 * @param pais
+	 * @return
+	 */
+	@PutMapping(consumes = "application/json", produces = "application/json")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Pais atualizarPais(@Valid @RequestBody Pais pais) {
+		return paisRepository.save(pais);
+	}
 
+	/**
+	 * Processa requisições que utilizam o método DELETE do HTTP para remover um país ao buscar pelo código do IBGE
+	 * @param pais
+	 * @return
+	 */
+	@DeleteMapping("/{codigoIBGEPais}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void removerPais(@PathVariable Long codigoIBGEPais) {
+		paisRepository.deleteById(codigoIBGEPais);
+	}
 }
