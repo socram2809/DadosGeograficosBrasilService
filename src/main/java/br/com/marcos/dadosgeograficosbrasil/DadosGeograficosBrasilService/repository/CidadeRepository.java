@@ -3,6 +3,8 @@ package br.com.marcos.dadosgeograficosbrasil.DadosGeograficosBrasilService.repos
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import br.com.marcos.dadosgeograficosbrasil.DadosGeograficosBrasilService.dominio.Cidade;
 
@@ -30,8 +32,11 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 	/**
 	 * Realiza a busca de cidades pelo CEP
 	 * @param numeroCEPs
+	 * @param numeroCEPsString
 	 * @return
 	 */
-	public List<Cidade> findByCepsNumeroCEPIn(List<Long> numeroCEPs);
+	@Query(value = "select cid from Cidade cid join cid.ceps cep where cep.numeroCEP in :numeroCEPs "
+			     + "order by POSITION(cep.numeroCEP, :numeroCEPsString)")
+	public List<Cidade> findByCepsNumeroCEPIn(@Param("numeroCEPs") List<Long> numeroCEPs, @Param("numeroCEPsString") String numeroCEPsString);
 
 }

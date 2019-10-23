@@ -2,6 +2,8 @@ package br.com.marcos.dadosgeograficosbrasil.DadosGeograficosBrasilService.resou
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.validation.Valid;
 
@@ -249,9 +251,20 @@ public class CidadeResource {
 	 */
 	@GetMapping("/retornaTrajeto")
 	public List<Cidade> retornarTrajetoCidadesPelosCeps(@RequestParam(name = "numeroCEPs") List<Long> numeroCEPs){
-		List<Cidade> cidades = cidadeRepository.findByCepsNumeroCEPIn(numeroCEPs);
-		//verificar estratégia para ordernar uma lista a partir de outra
-		return cidades;
+		List<Cidade> cidades = cidadeRepository.findByCepsNumeroCEPIn(numeroCEPs, 
+				numeroCEPs.stream().map(Object::toString).collect(Collectors.joining(",")));
+		List<Cidade> cidadesSemRepeticoesSeq = new ArrayList<>();
+		
+		if(cidades != null && !cidades.isEmpty()) {
+			//não repetir cidades em sequência
+			cidadesSemRepeticoesSeq = IntStream
+		            .range(0, cidades.size())
+		            .filter(i -> ((i < cidades.size() - 1 && !cidades.get(i).equals(cidades
+		                    .get(i + 1))) || i == cidades.size() - 1))
+		            .mapToObj(i -> cidades.get(i)).collect(Collectors.toList());
+		}
+		
+		return cidadesSemRepeticoesSeq;
 	}
 
 }
