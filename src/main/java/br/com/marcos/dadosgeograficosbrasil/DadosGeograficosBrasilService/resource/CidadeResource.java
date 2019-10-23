@@ -240,5 +240,18 @@ public class CidadeResource {
 		cep.setCodigoIBGECidade(cidade.getCodigoIBGE());
 		cep = cepRepository.save(cep);
 	}
+	
+	/**
+	 * Processa requisições, na URI "/retornaTrajeto", que utilizam o método GET do HTTP para retornar uma lista de cidades a partir 
+	 * de uma lista de CEPs
+	 * @param numeroCEPs
+	 * @return
+	 */
+	@GetMapping("/retornaTrajeto")
+	public List<Cidade> retornarTrajetoCidadesPelosCeps(@RequestParam(name = "numeroCEPs") List<Long> numeroCEPs){
+		List<Cidade> cidades = cidadeRepository.findByCepsNumeroCEPIn(numeroCEPs);
+		//verificar estratégia para ordernar uma lista a partir de outra
+		return cidades;
+	}
 
 }

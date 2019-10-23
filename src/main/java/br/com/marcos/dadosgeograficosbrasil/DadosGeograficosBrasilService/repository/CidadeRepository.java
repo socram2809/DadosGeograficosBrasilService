@@ -26,5 +26,12 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 	 * @return
 	 */
 	public List<Cidade> findByCepsNumeroCEP(Long numeroCEP);
+	
+	/**
+	 * Realiza a busca de cidades pelo CEP
+	 * @param numeroCEPs
+	 * @return
+	 */
+	public List<Cidade> findByCepsNumeroCEPIn(List<Long> numeroCEPs);
 
 }
