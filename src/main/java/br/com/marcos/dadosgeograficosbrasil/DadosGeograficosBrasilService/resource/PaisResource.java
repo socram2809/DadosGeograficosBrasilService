@@ -53,7 +53,7 @@ public class PaisResource {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public List<Pais> recuperarPaisesPaginado(@RequestParam(name="pagina") int pagina, @RequestParam int tamanho){
+	public List<Pais> recuperarPaisesPaginado(@RequestParam(name="pagina") int pagina, @RequestParam(name="tamanho") int tamanho){
 		Page<Pais> paginaPais = paisRepository.findAll(PageRequest.of(pagina, tamanho));
 		return paginaPais.getContent();
 	}
@@ -92,12 +92,22 @@ public class PaisResource {
 
 	/**
 	 * Processa requisições que utilizam o método DELETE do HTTP para remover um país ao buscar pelo código do IBGE
-	 * @param pais
+	 * @param codigoIBGEPais
 	 * @return
 	 */
 	@DeleteMapping("/{codigoIBGEPais}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void removerPais(@PathVariable Long codigoIBGEPais) {
 		paisRepository.deleteById(codigoIBGEPais);
+	}
+	
+	/**
+	 * Processa requisições, na URI "/search", que utilizam o método GET do HTTP para buscar países pelo nome
+	 * @param nome
+	 * @return
+	 */
+	@GetMapping("/search")
+	public List<Pais> recuperarPaisesComFiltros(@RequestParam(name="nome") String nome){
+		return paisRepository.findByNomeContainingIgnoreCase(nome);
 	}
 }

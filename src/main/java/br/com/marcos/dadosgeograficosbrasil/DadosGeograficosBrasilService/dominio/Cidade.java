@@ -1,9 +1,13 @@
 package br.com.marcos.dadosgeograficosbrasil.DadosGeograficosBrasilService.dominio;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Classe de domínio que representa uma cidade
@@ -28,8 +32,15 @@ public class Cidade {
 	/**
 	 * Estado da cidade
 	 */
+	@NotNull
 	@ManyToOne
 	private Estado estado;
+	
+	/**
+	 * CEPs da cidade
+	 */
+	@OneToMany(mappedBy = "codigoIBGECidade")
+	private List<CodigoEnderecamentoPostal> ceps;
 
 	public Long getCodigoIBGE() {
 		return codigoIBGE;
@@ -53,6 +64,14 @@ public class Cidade {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+	
+	public List<CodigoEnderecamentoPostal> getCeps() {
+		return ceps;
+	}
+
+	public void setCeps(List<CodigoEnderecamentoPostal> ceps) {
+		this.ceps = ceps;
 	}
 	
 }

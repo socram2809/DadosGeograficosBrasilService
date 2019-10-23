@@ -1,11 +1,9 @@
 package br.com.marcos.dadosgeograficosbrasil.DadosGeograficosBrasilService.dominio;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Classe de domínio que representa um Código de Endereçamento Postal (CEP) 
@@ -19,28 +17,19 @@ public class CodigoEnderecamentoPostal {
 	 * Identificador do CEP
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	/**
-	 * Número do CEP
-	 */
-	@NotEmpty
 	private Long numeroCEP;
 	
 	/**
-	 * Cidade do CEP
+	 * Logradouro
 	 */
-	@ManyToOne
-	private Cidade cidade;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@NotEmpty
+	private String logradouro;
+	
+	/**
+	 * Código do IBGE da cidade
+	 */
+	@NotNull
+	private Long codigoIBGECidade;
 
 	public Long getNumeroCEP() {
 		return numeroCEP;
@@ -50,12 +39,20 @@ public class CodigoEnderecamentoPostal {
 		this.numeroCEP = numeroCEP;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public Long getCodigoIBGECidade() {
+		return codigoIBGECidade;
+	}
+
+	public void setCodigoIBGECidade(Long codigoIBGECidade) {
+		this.codigoIBGECidade = codigoIBGECidade;
 	}
 
 }

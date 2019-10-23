@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Classe de domínio que representa um estado
@@ -28,6 +29,7 @@ public class Estado {
 	/**
 	 * País do estado
 	 */
+	@NotNull
 	@ManyToOne
 	private Pais pais;
 
