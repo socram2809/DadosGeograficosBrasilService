@@ -5,7 +5,7 @@ O DadosGeograficosBrasilService é uma API que foi desenvolvida para manter os d
 
 Todos os serviços da API foram desenvolvidos no padrão REST, possuem implementação baseada em Spring Boot e testes automatizados.
 
-A documentação de uso da API é definida no formato do [Swagger](https://swagger.io/solutions/api-documentation/).
+A documentação de uso da API é definida no formato do [Swagger](https://swagger.io/solutions/api-documentation/). Caso acesse a aplicação localmente e na porta 8080, a documentação estará em [Swagger-UI](http://localhost:8080/swagger-ui.html).
 
 ## Tecnologias
 
@@ -19,13 +19,13 @@ A documentação de uso da API é definida no formato do [Swagger](https://swagg
 
 ` mvn install `
 
-Executado o comando acima na raiz do projeto onde se encontra o arquivo "pom.xml", será construído e empacotada uma aplicação Spring Boot dentro de um único arquivo Jar executável com o Maven.
+Executado o comando acima na raiz do projeto, onde se encontra o arquivo "pom.xml", será construída e empacotada uma aplicação Spring Boot dentro de um único arquivo executável de extensão ".jar".
 
 ## Executar
 
 ` java -jar target/DadosGeograficosBrasilService-1.0.0.jar `
 
-Para rodar a aplicação por linha de comando em uma janela de terminal, deve-se usar o comando acima. O arquivo executável de extensão ".jar" é a aplicação empacotada após construí-la.
+Para rodar a aplicação por linha de comando e acessá-la pelo navegador, deve-se usar o comando acima.
 
 ### Referências
 
